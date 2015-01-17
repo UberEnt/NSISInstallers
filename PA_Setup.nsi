@@ -54,8 +54,8 @@ Name "${PRODUCT_NAME}"
 ; Descriptions
 
 LangString DESC_Launcher ${LANG_ENGLISH} "Installs the launcher"
-LangString DESC_StartMenu ${LANG_ENGLISH} "Creates a shortcut to the launcher in your Start Menu"
-LangString DESC_Desktop ${LANG_ENGLISH} "Creates a shortcut to the launcher on your Desktop"
+LangString DESC_StartMenu ${LANG_ENGLISH} "Creates a shortcut to the launcher in all users' Start Menus"
+LangString DESC_Desktop ${LANG_ENGLISH} "Creates a shortcut to the launcher on all users' Desktops"
 
 ;--------------------------------
 ; Executable metadata
@@ -145,13 +145,18 @@ SectionEnd
 Section "Start Menu Shortcut" SecStartMenu
     SetDetailsPrint listonly
     !insertmacro SetStatus "Creating Start Menu shortcut"
+    SetShellVarContext all
+    CreateDirectory "$SMPROGRAMS\Planetary Annihilation"
     CreateShortcut "$SMPROGRAMS\Planetary Annihilation\${PRODUCT_NAME}.lnk" "$INSTDIR\PALauncher.exe"
+    SetShellVarContext current
 SectionEnd
 
 Section "Desktop Shortcut" SecDesktop
     SetDetailsPrint listonly
     !insertmacro SetStatus "Creating Desktop shortcut"
+    SetShellVarContext all
     CreateShortcut "$DESKTOP\PA Launcher.lnk" "$INSTDIR\PALauncher.exe"
+    SetShellVarContext current
 SectionEnd
 
 Section "-Redistributable Cleanup"
